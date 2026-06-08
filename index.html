@@ -57,10 +57,19 @@
             <p class="section-label">01 - Work</p>
             <h2 class="section-title">Projects</h2>
 
+<div class="filter-buttons">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="design">Design</button>
+    <button class="filter-btn" data-filter="web">Web</button>
+    <button class="filter-btn" data-filter="code">Code</button>
+</div>
+
+<p id="project-count">3 Projects</p>
+
             <div class="projects-grid">
 
                 <!-- Project Card 1 -->
-                <article class="card reveal">
+                <article class="card reveal project-item" data-category="design"></article>
 
                     <span class="card-tag">
                         UI / UX Design
@@ -89,12 +98,22 @@
                         rel="noopener"
                         class="card-link"
                     >
+<div style="margin:20px 0;">
+<iframe
+style="border:1px solid rgba(0,0,0,0.1);border-radius:10px;"
+width="100%"
+height="300"
+src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/Y45UWsZYGVtVQGNJlVMR6p/Tide-Task-Manager?node-id=0-1&t=LHKgPaANsbYrdoI5-1"
+allowfullscreen>
+</iframe>
+</div>
+
                         View Project →
                     </a>
 
                 </article>
  <!-- Project Card 2 -->
-            <article class="card reveal">
+            <article class="card reveal project-item" data-category="web"></article>
 
                 <span class="card-tag">
                     Web Development
@@ -129,7 +148,7 @@
             </article>
 
             <!-- Project Card 3 -->
-            <article class="card reveal">
+            <article class="card reveal project-item" data-category="code"></article>
 
                 <span class="card-tag">
                     Automation
@@ -217,6 +236,55 @@
             <div class="skill-track">
                 <div class="skill-fill" style="--w:80%;"></div>
             </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="section" id="blog">
+    <div class="container">
+
+        <p class="section-label">03 - Blog</p>
+        <h2 class="section-title">Latest Posts</h2>
+
+        <div class="blog-grid">
+
+            <article class="card reveal">
+                <h3 class="card-title">Starting My Web Development Journey</h3>
+                <small>June 2026</small>
+
+                <p class="card-desc">
+                    Learning HTML and CSS opened the door to creating
+                    beautiful and responsive websites.
+                </p>
+
+                <a href="#" class="card-link">Read More →</a>
+            </article>
+
+            <article class="card reveal">
+                <h3 class="card-title">Designing in Figma</h3>
+                <small>June 2026</small>
+
+                <p class="card-desc">
+                    My internship project helped me understand UI design,
+                    components, and design systems.
+                </p>
+
+                <a href="#" class="card-link">Read More →</a>
+            </article>
+
+            <article class="card reveal">
+                <h3 class="card-title">Building My Portfolio</h3>
+                <small>June 2026</small>
+
+                <p class="card-desc">
+                    Creating my own portfolio improved my HTML, CSS,
+                    JavaScript, and responsive design skills.
+                </p>
+
+                <a href="#" class="card-link">Read More →</a>
+            </article>
+
         </div>
 
     </div>

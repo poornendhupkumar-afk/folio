@@ -85,3 +85,38 @@ const observer = new IntersectionObserver(
 revealItems.forEach((item) => {
     observer.observe(item);
 });
+const buttons = document.querySelectorAll(".filter-btn");
+const cards = document.querySelectorAll(".project-item");
+const counter = document.getElementById("project-count");
+
+buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        document.querySelector(".filter-btn.active")
+            .classList.remove("active");
+
+        btn.classList.add("active");
+
+        const filter = btn.dataset.filter;
+        let visible = 0;
+
+        cards.forEach(card => {
+
+            if(filter === "all" ||
+               card.dataset.category === filter){
+
+                card.classList.remove("hide");
+                visible++;
+
+            } else {
+
+                card.classList.add("hide");
+
+            }
+
+        });
+
+        counter.textContent =
+            visible + (visible === 1 ? " Project" : " Projects");
+    });
+});
