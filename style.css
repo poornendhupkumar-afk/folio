@@ -1,0 +1,512 @@
+/* ===================================
+   3.1 DESIGN TOKENS
+=================================== */
+
+:root {
+
+  /* Colors */
+  --primary: #5aa8f0;
+
+  --ink: #1a1a1a;
+  --ink-muted: #666666;
+
+  --surface: #fcfaf3;
+  --card: #ffffff;
+  --border: #e5e9eb;
+
+  --pri-high: #c7e4ff;
+  --pri-med: #c0d2f4;
+  --pri-low: #749fd5;
+
+  /* Typography */
+  --display: clamp(2.2rem, 6vw, 3.5rem);
+
+  --h1: 2rem;
+  --h2: 1.6rem;
+  --h3: 1.2rem;
+
+  --body: 1rem;
+  --cap: 0.875rem;
+  --sm: 0.75rem;
+
+  /* Spacing */
+  --s4: 0.25rem;
+  --s8: 0.5rem;
+  --s12: 0.75rem;
+  --s16: 1rem;
+
+  --s24: 1.5rem;
+  --s32: 2rem;
+  --s48: 3rem;
+  --s64: 4rem;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* Shadow */
+  --shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+
+/* ===================================
+   3.2 DARK MODE
+=================================== */
+
+body.dark {
+
+  --primary: #7fb3d5;
+
+  --ink: #f5f5f4;
+  --ink-muted: #9ba3ac;
+
+  --surface: #0f1419;
+  --card: #1a232f;
+
+  --border: rgba(255,255,255,0.12);
+
+  --shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+
+/* ===================================
+   3.3 RESET + BASE
+=================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  line-height: 1.6;
+  transition:
+    background-color .3s ease,
+    color .3s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  width: min(1100px, 90%);
+  margin: 0 auto;
+}
+
+
+/* ===================================
+   NAVIGATION
+=================================== */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s16) 0;
+}
+
+.nav-brand {
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--s24);
+  align-items: center;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+.theme-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: var(--s8) var(--s16);
+  cursor: pointer;
+  color: var(--ink);
+}
+
+/* ===================================
+   HERO
+=================================== */
+
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-tag {
+  color: var(--primary);
+  margin-bottom: var(--s8);
+}
+
+.hero-name {
+  font-size: var(--display);
+  margin-bottom: var(--s12);
+}
+
+.hero-role {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: var(--s16);
+}
+
+.hero-description {
+  max-width: 650px;
+  color: var(--ink-muted);
+  margin-bottom: var(--s32);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: var(--s16);
+  flex-wrap: wrap;
+}
+
+
+/* ===================================
+   BUTTONS
+=================================== */
+
+.btn {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--r-pill);
+  transition: .3s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--ink);
+}
+
+
+/* ===================================
+   SECTIONS
+=================================== */
+
+.section {
+  padding: var(--s64) 0;
+}
+
+.section-label {
+  color: var(--primary);
+  font-size: var(--sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--s8);
+}
+
+.section-title {
+  font-size: var(--h2);
+  margin-bottom: var(--s32);
+}
+
+
+/* ===================================
+   PROJECTS
+=================================== */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s24);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s24);
+  box-shadow: var(--shadow);
+}
+
+.card-tag {
+  display: inline-block;
+  background: var(--pri-high);
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  margin-bottom: var(--s16);
+}
+
+.card-title {
+  margin-bottom: var(--s12);
+}
+
+.card-desc {
+  color: var(--ink-muted);
+  margin-bottom: var(--s16);
+}
+
+
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s8);
+  margin-bottom: var(--s16);
+}
+
+.card-meta span {
+  font-size: var(--sm);
+  padding: var(--s4) var(--s12);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+}
+
+.card-link {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+
+/* ===================================
+   SKILLS
+=================================== */
+
+.skill {
+  margin-bottom: var(--s24);
+}
+
+.skill-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--s8);
+}
+
+.skill-track {
+  height: 10px;
+  background: var(--border);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+.skill-fill {
+  width: var(--w);
+  height: 100%;
+  background: var(--primary);
+  border-radius: var(--r-pill);
+}
+
+
+/* ===================================
+   CONTACT
+=================================== */
+
+.contact-grid {
+  display: grid;
+  gap: var(--s16);
+  margin-top: var(--s24);
+}
+
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: var(--s24);
+  border-radius: var(--r-md);
+  transition: .3s;
+}
+
+.contact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+
+/* ===================================
+   FOOTER
+=================================== */
+
+.footer {
+  text-align: center;
+  padding: var(--s32) 0;
+  border-top: 1px solid var(--border);
+  color: var(--ink-muted);
+}
+
+
+/* ===================================
+   REVEAL ANIMATION
+=================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media (max-width: 768px) {
+
+  .hero {
+    min-height: auto;
+    padding: var(--s48) 0;
+    text-align: center;
+  }
+
+  .nav-inner {
+    flex-direction: column;
+    gap: var(--s16);
+  }
+
+  .nav-links {
+    gap: var(--s16);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .section {
+    padding: var(--s48) 0;
+  }
+
+  .contact-card {
+    width: 100%;
+  }
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s24);
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-desc {
+  flex: 1;
+  color: var(--ink-muted);
+  margin-bottom: var(--s16);
+}
+.hero {
+  padding: var(--s64) 0;
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-name {
+  font-size: var(--display);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.hero-role,
+.hero-tag {
+  color: var(--ink-muted);
+}
+
+.highlight {
+  color: var(--primary);
+  font-weight: 600;
+}
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: var(--s24);
+  border-radius: var(--r-md);
+  transition: transform .25s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px);
+}
+.to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+
+  width: 48px;
+  height: 48px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: var(--primary);
+  color: white;
+
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: 0.3s;
+}
+
+.to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.to-top:hover {
+  transform: translateY(-3px);
+}
