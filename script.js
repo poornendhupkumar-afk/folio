@@ -4,6 +4,7 @@
    1. Dark Mode Toggle
    2. Back To Top Button
    3. Scroll Reveal Animation
+   4. Filterable Project Gallery
 ========================================== */
 
 
@@ -13,16 +14,21 @@
 
 const themeToggle = document.querySelector("#theme-toggle");
 
-themeToggle.addEventListener("click", () => {
+if (themeToggle) {
 
-    document.body.classList.toggle("dark");
+    themeToggle.addEventListener("click", () => {
 
-    const isDark = document.body.classList.contains("dark");
+        document.body.classList.toggle("dark");
 
-    themeToggle.textContent = isDark
-        ? "☀️ Light Mode"
-        : "🌙 Dark Mode";
-});
+        const isDark = document.body.classList.contains("dark");
+
+        themeToggle.textContent = isDark
+            ? "☀️ Light Mode"
+            : "🌙 Dark Mode";
+
+    });
+
+}
 
 
 /* ==========================================
@@ -51,6 +57,7 @@ if (toTop) {
         });
 
     });
+
 }
 
 
@@ -60,63 +67,96 @@ if (toTop) {
 
 const revealItems = document.querySelectorAll(".reveal");
 
-const observer = new IntersectionObserver(
+if (revealItems.length > 0) {
 
-    (entries) => {
+    const observer = new IntersectionObserver(
 
-        entries.forEach((entry) => {
+        (entries) => {
 
-            if (entry.isIntersecting) {
+            entries.forEach((entry) => {
 
-                entry.target.classList.add("is-visible");
+                if (entry.isIntersecting) {
 
-                observer.unobserve(entry.target);
-            }
+                    entry.target.classList.add("is-visible");
 
-        });
+                    observer.unobserve(entry.target);
 
-    },
+                }
 
-    {
-        threshold: 0.15
-    }
-);
+            });
 
-revealItems.forEach((item) => {
-    observer.observe(item);
-});
+        },
+
+        {
+            threshold: 0.15
+        }
+
+    );
+
+    revealItems.forEach((item) => {
+        observer.observe(item);
+    });
+
+}
+
+
+/* ==========================================
+   4. FILTERABLE PROJECT GALLERY
+========================================== */
+
 const buttons = document.querySelectorAll(".filter-btn");
 const cards = document.querySelectorAll(".project-item");
 const counter = document.getElementById("project-count");
 
-buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
+if (buttons.length > 0 && cards.length > 0) {
 
-        document.querySelector(".filter-btn.active")
-            .classList.remove("active");
+    buttons.forEach((btn) => {
 
-        btn.classList.add("active");
+        btn.addEventListener("click", () => {
 
-        const filter = btn.dataset.filter;
-        let visible = 0;
+            const activeBtn =
+                document.querySelector(".filter-btn.active");
 
-        cards.forEach(card => {
+            if (activeBtn) {
+                activeBtn.classList.remove("active");
+            }
 
-            if(filter === "all" ||
-               card.dataset.category === filter){
+            btn.classList.add("active");
 
-                card.classList.remove("hide");
-                visible++;
+            const filter = btn.dataset.filter;
 
-            } else {
+            let visibleProjects = 0;
 
-                card.classList.add("hide");
+            cards.forEach((card) => {
+
+                if (
+                    filter === "all" ||
+                    card.dataset.category === filter
+                ) {
+
+                    card.classList.remove("hide");
+                    visibleProjects++;
+
+                } else {
+
+                    card.classList.add("hide");
+
+                }
+
+            });
+
+            if (counter) {
+
+                counter.textContent =
+                    visibleProjects +
+                    (visibleProjects === 1
+                        ? " Project"
+                        : " Projects");
 
             }
 
         });
 
-        counter.textContent =
-            visible + (visible === 1 ? " Project" : " Projects");
     });
-});
+
+}
