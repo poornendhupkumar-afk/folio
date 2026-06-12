@@ -82,6 +82,8 @@ def send_email(summary):
     msg.set_content(summary)
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        print("Email:", sender)
+        print("Password length:", len(password))
         smtp.login(sender, password)
         smtp.send_message(msg)
 if __name__ == "__main__":  
