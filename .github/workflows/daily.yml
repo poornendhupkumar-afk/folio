@@ -28,13 +28,12 @@ jobs:
       - name: Run Pulse Bot
         run: python bot.py
 
-      - name: Run Weather Alert
+      - name: Run News Digest
         env:
-          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-        run: python weather_alert.py
+        run: python news_digest.py
 
       - name: Upload summary as artifact
         uses: actions/upload-artifact@v4
