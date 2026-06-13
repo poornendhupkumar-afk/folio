@@ -8,23 +8,28 @@ from email.mime.text import MIMEText
 current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 sites = [
-    "https://news.ycombinator.com/",
-    "https://www.bbc.com/news",
-    "https://www.reuters.com/world/"
+    ("Hacker News", "https://news.ycombinator.com/"),
+    ("BBC News", "https://www.bbc.com/news"),
+    ("AP News", "https://apnews.com/")
 ]
 
 html = """
 <h1>📰 Daily News Digest</h1>
+<p>Top headlines collected automatically.</p>
 """
 
-for site in sites:
+for source_name, site in sites:
 
     try:
-        response = requests.get(site, timeout=10)
+        response = requests.get(
+            site,
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=10
+        )
 
         soup = BeautifulSoup(response.text, "html.parser")
 
-        html += f"<h2>{site}</h2><ul>"
+        html += f"<h2>{source_name}</h2><ul>"
 
         headlines = soup.find_all(["h1", "h2", "h3", "a"])
 
@@ -38,7 +43,7 @@ for site in sites:
 
                 html += f"""
                 <li>
-                    {text}<br>
+                    <strong>{text}</strong><br>
                     Published: {current_time}<br>
                     <a href="{site}">Source</a>
                 </li>
@@ -52,7 +57,13 @@ for site in sites:
         html += "</ul>"
 
     except Exception as e:
-        html += f"<p>Error reading {site}: {e}</p>"
+
+        html += f"""
+        <p>
+        Could not fetch headlines from {source_name}<br>
+        Error: {e}
+        </p>
+        """
 
 sender = os.environ.get("EMAIL_SENDER")
 password = os.environ.get("EMAIL_PASSWORD")
@@ -68,4 +79,4 @@ with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
     server.login(sender, password)
     server.send_message(msg)
 
-print("News digest sent")
+print("News digest sent successfully")
