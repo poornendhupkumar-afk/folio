@@ -1,13 +1,16 @@
 import os
 import requests
 import smtplib
-
+from datetime import datetime
 from bs4 import BeautifulSoup
 from email.mime.text import MIMEText
 
+current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
+
 sites = [
     "https://news.ycombinator.com/",
-    "https://www.bbc.com/news"
+    "https://www.bbc.com/news",
+    "https://www.reuters.com/world/"
 ]
 
 html = """
@@ -33,7 +36,13 @@ for site in sites:
 
             if len(text) > 20:
 
-                html += f"<li>{text}</li>"
+                html += f"""
+                <li>
+                    {text}<br>
+                    Published: {current_time}<br>
+                    <a href="{site}">Source</a>
+                </li>
+                """
 
                 count += 1
 
@@ -43,7 +52,7 @@ for site in sites:
         html += "</ul>"
 
     except Exception as e:
-        html += f"<p>Error reading {site}</p>"
+        html += f"<p>Error reading {site}: {e}</p>"
 
 sender = os.environ.get("EMAIL_SENDER")
 password = os.environ.get("EMAIL_PASSWORD")
