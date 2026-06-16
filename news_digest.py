@@ -10,7 +10,7 @@ current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
 sites = [
     ("Hacker News", "https://news.ycombinator.com/rss"),
     ("BBC News", "https://feeds.bbci.co.uk/news/rss.xml"),
-    ("AP News", "https://apnews.com/hub/ap-top-news/rss.xml")
+    ("Reuters", "https://feeds.reuters.com/reuters/topNews")
 ]
 
 html = f"""
