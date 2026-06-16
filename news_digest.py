@@ -1,69 +1,55 @@
 import os
-import requests
 import smtplib
 from datetime import datetime
-from bs4 import BeautifulSoup
 from email.mime.text import MIMEText
+
+import feedparser
 
 current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 sites = [
-    ("Hacker News", "https://news.ycombinator.com/"),
-    ("BBC News", "https://www.bbc.com/news"),
-    ("AP News", "https://apnews.com/")
+    ("Hacker News", "https://news.ycombinator.com/rss"),
+    ("BBC News", "https://feeds.bbci.co.uk/news/rss.xml"),
+    ("AP News", "https://apnews.com/hub/ap-top-news/rss.xml")
 ]
 
-html = """
+html = f"""
 <h1>📰 Daily News Digest</h1>
 <p>Top headlines collected automatically.</p>
+<p>Generated on: {current_time}</p>
 """
 
-for source_name, site in sites:
+for source_name, feed_url in sites:
+
+    html += f"<h2>{source_name}</h2><ul>"
 
     try:
-        response = requests.get(
-            site,
-            headers={"User-Agent": "Mozilla/5.0"},
-            timeout=10
-        )
+        feed = feedparser.parse(feed_url)
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        if not feed.entries:
+            html += "<li>No headlines found.</li>"
 
-        html += f"<h2>{source_name}</h2><ul>"
+        for entry in feed.entries[:5]:
 
-        headlines = soup.find_all(["h1", "h2", "h3", "a"])
+            title = entry.title
+            link = entry.link
 
-        count = 0
-
-        for item in headlines:
-
-            text = item.get_text(strip=True)
-
-            if len(text) > 20:
-
-                html += f"""
-                <li>
-                    <strong>{text}</strong><br>
-                    Published: {current_time}<br>
-                    <a href="{site}">Source</a>
-                </li>
-                """
-
-                count += 1
-
-            if count == 5:
-                break
-
-        html += "</ul>"
+            html += f"""
+            <li>
+                <strong>{title}</strong><br>
+                <a href="{link}">Read More</a>
+            </li>
+            """
 
     except Exception as e:
 
         html += f"""
-        <p>
-        Could not fetch headlines from {source_name}<br>
-        Error: {e}
-        </p>
+        <li>
+            Error fetching headlines: {e}
+        </li>
         """
+
+    html += "</ul>"
 
 sender = os.environ.get("EMAIL_SENDER")
 password = os.environ.get("EMAIL_PASSWORD")
